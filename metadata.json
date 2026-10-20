@@ -1,0 +1,6 @@
+{
+  "name": "SmartBooks — Accounting & Bookkeeping",
+  "description": "Production-grade double-entry accounting and bookkeeping management system featuring multi-company management, cash books, general ledger, inventory, invoicing, trial balances, and financial statements.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

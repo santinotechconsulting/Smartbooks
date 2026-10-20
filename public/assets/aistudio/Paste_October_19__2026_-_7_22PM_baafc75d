@@ -1,0 +1,1084 @@
+PROJECT TITLE:
+SMARTBOOKS — PROFESSIONAL ACCOUNTING AND BOOKKEEPING
+MANAGEMENT SYSTEM
+
+1. YOUR ROLE
+
+Act as a senior accountant, certified accounting systems
+analyst, financial software architect, database engineer,
+professional UI/UX designer, and full-stack web developer.
+
+Your task is to design and build a complete, functional,
+production-oriented accounting and bookkeeping management
+system.
+
+This must NOT be a static dashboard, a simple calculator,
+a demonstration interface, or an application containing
+non-functional buttons.
+
+Build a real accounting application with functional forms,
+database persistence, transaction processing, accounting
+logic, validations, financial reports, document generation,
+search, filtering, and export capabilities.
+
+The application must follow recognized double-entry
+bookkeeping principles and maintain a complete audit trail.
+
+It must support cash accounting records, bank transactions,
+general ledger operations, trial balances, financial
+statements, accounts payable, accounts receivable,
+inventory accounting, and other common accounting operations.
+
+All financial calculations must be performed using reliable
+accounting logic rather than hardcoded sample values.
+
+Every financial report must be generated from actual
+transactions recorded in the database.
+
+Do not display fictitious financial figures as if they
+were real company data.
+
+========================================================
+2. SYSTEM OBJECTIVES
+========================================================
+
+The application must enable users to:
+
+1. Register and manage businesses or organizations.
+2. Configure their accounting periods and financial years.
+3. Create and manage a chart of accounts.
+4. Record daily financial transactions.
+5. Maintain single-column and double-column cash books.
+6. Maintain petty cash records.
+7. Record cash receipts and payments.
+8. Record bank deposits and withdrawals.
+9. Record bank transfers and contra entries.
+10. Record sales, purchases, expenses, and income.
+11. Manage customers and suppliers.
+12. Generate invoices and receipts.
+13. Manage accounts receivable and accounts payable.
+14. Maintain inventory and stock valuation.
+15. Generate journals and general ledger accounts.
+16. Prepare trial balances.
+17. Generate income statements and balance sheets.
+18. Generate cash flow statements.
+19. Prepare bank reconciliation statements.
+20. Manage fixed assets and depreciation.
+21. Manage loans and liabilities.
+22. Track taxes and applicable tax obligations.
+23. Manage payroll accounting where configured.
+24. Prepare budgets and compare actual performance
+    against budgeted amounts.
+25. Generate financial statements for different periods.
+26. Generate professional accounting documents.
+27. Export documents to PDF, Excel, and CSV where relevant.
+28. Maintain audit logs and transaction histories.
+29. Allow authorised users to review and approve transactions.
+30. Support financial year-end closing procedures.
+31. Support multiple companies or business entities.
+32. Provide management reports and financial dashboards.
+
+Every module must be connected to the accounting engine.
+
+========================================================
+3. TECHNOLOGY AND ARCHITECTURE
+========================================================
+
+Build a modern, responsive web application.
+
+Recommended frontend:
+- React
+- TypeScript
+- Vite
+- A modern component-based UI library
+- Responsive CSS or Tailwind CSS
+- Accessible form controls
+- Reusable table and reporting components
+
+Recommended backend:
+- A secure server-side application or cloud functions.
+- Firebase Authentication or another secure authentication
+  provider.
+- A database architecture appropriate for accounting data.
+
+Database requirements:
+- Use a production-ready database with reliable transactions.
+- PostgreSQL is preferred for strict relational integrity,
+  financial reporting, and complex accounting relationships.
+- Firebase may be used for authentication, notifications,
+  and other suitable application services.
+- If Firestore is selected as the primary database, implement
+  explicit consistency controls, server-side validation,
+  immutable posted journal records, and safe transaction
+  processing.
+
+Do not place service account credentials, private API keys,
+or privileged database credentials in frontend code.
+
+All sensitive accounting operations must be validated and
+authorised on the server.
+
+The application must support:
+- Development environment.
+- Testing environment.
+- Production environment.
+- Database migrations.
+- Automated testing.
+- Error logging.
+- Backups and recovery.
+- Secure configuration management.
+
+Create a clear architecture that can be deployed on Vercel
+or another compatible hosting provider.
+
+If a feature requires a backend service that has not yet
+been configured, identify the missing configuration instead
+of pretending the feature is operational.
+
+Do not replace persistent storage with localStorage for
+production accounting records.
+
+========================================================
+4. COMPANY REGISTRATION AND CONFIGURATION
+========================================================
+
+Create a company registration module.
+
+Each company should have:
+
+- Company name.
+- Trading name.
+- Company registration number.
+- Tax identification number.
+- Business address.
+- City.
+- Country.
+- Telephone number.
+- Email address.
+- Website.
+- Company logo.
+- Currency.
+- Financial year start date.
+- Financial year end date.
+- Default accounting method.
+- Tax configuration.
+- Invoice numbering format.
+- Receipt numbering format.
+- Journal numbering format.
+- Default document footer.
+- Authorised signatories.
+
+Allow users to configure their company profile.
+
+Support multiple companies under one user account.
+
+Ensure that one company's financial records cannot be
+accessed by users who are not authorised for that company.
+
+Support configurable accounting periods and period locking.
+
+Allow the company to choose its base currency.
+
+Do not assume that every company uses the same tax rules,
+currency, financial year, or accounting standards.
+
+========================================================
+5. USER AUTHENTICATION AND ACCESS CONTROL
+========================================================
+
+Implement secure login, logout, password recovery, and
+session management.
+
+Support these roles:
+
+1. Super Administrator
+2. Company Administrator
+3. Accountant
+4. Bookkeeper
+5. Cashier
+6. Auditor
+7. Finance Manager
+8. Inventory Manager
+9. Sales Officer
+10. Read-Only Viewer
+
+Allow administrators to assign permissions.
+
+Examples:
+
+A cashier may record cash receipts and payments but should
+not automatically have permission to modify posted journals.
+
+A bookkeeper may create transactions and submit them for
+approval.
+
+An accountant may review journals and generate reports.
+
+An auditor may inspect transactions and audit trails without
+modifying financial records.
+
+A company administrator may manage users and configuration.
+
+Enforce permissions on the backend, not only by hiding
+buttons on the frontend.
+
+========================================================
+6. ACCOUNTING ENGINE
+========================================================
+
+The accounting engine is the most important component
+of this application.
+
+Implement a true double-entry bookkeeping system.
+
+Every posted journal entry must contain:
+
+- Unique journal identifier.
+- Transaction date.
+- Accounting period.
+- Reference number.
+- Source document.
+- Description.
+- Debit account lines.
+- Credit account lines.
+- Currency.
+- Exchange rate when applicable.
+- Amounts.
+- Created by.
+- Approved by, where applicable.
+- Posting timestamp.
+- Transaction status.
+- Audit references.
+
+CORE ACCOUNTING RULE:
+
+For every posted journal entry:
+
+TOTAL DEBITS = TOTAL CREDITS.
+
+Reject any journal entry that does not balance.
+
+Do not allow a user to post a transaction with missing
+accounts, invalid amounts, or an invalid accounting period.
+
+Use decimal-safe monetary calculations.
+
+Do not use ordinary floating-point arithmetic for financial
+amounts without appropriate precision controls.
+
+Store monetary amounts using fixed-precision decimal types
+where supported.
+
+Define and consistently apply currency precision.
+
+Store the original transaction currency, functional currency,
+and exchange rate where foreign currency is supported.
+
+Do not silently change previously posted accounting entries.
+
+If a posted transaction requires correction, create an
+auditable reversal or adjustment.
+
+Support these transaction states:
+
+- Draft
+- Pending Approval
+- Approved
+- Posted
+- Reversed
+- Rejected
+
+Only authorised users may approve or post transactions.
+
+A posted journal must not be deleted or silently edited.
+
+Maintain a complete record of every correction.
+
+========================================================
+7. CHART OF ACCOUNTS
+========================================================
+
+Create a flexible chart of accounts.
+
+Default account categories:
+
+A. ASSETS
+- Cash on Hand
+- Petty Cash
+- Bank Accounts
+- Accounts Receivable
+- Inventory
+- Prepaid Expenses
+- Equipment
+- Furniture
+- Buildings
+- Vehicles
+- Accumulated Depreciation
+
+B. LIABILITIES
+- Accounts Payable
+- Accrued Expenses
+- Salaries Payable
+- Taxes Payable
+- Short-Term Loans
+- Long-Term Loans
+
+C. EQUITY
+- Owner's Capital
+- Share Capital
+- Retained Earnings
+- Drawings
+- Current-Year Earnings
+
+D. INCOME
+- Sales Revenue
+- Service Revenue
+- Interest Income
+- Other Operating Income
+
+E. EXPENSES
+- Cost of Goods Sold
+- Rent Expense
+- Salaries and Wages
+- Utilities
+- Office Expenses
+- Transportation
+- Advertising
+- Repairs and Maintenance
+- Insurance
+- Depreciation
+- Bank Charges
+- Other Expenses
+
+Allow the accountant to:
+- Create accounts.
+- Edit account descriptions.
+- Configure account codes.
+- Set account categories.
+- Set parent and child accounts.
+- Mark accounts as active or inactive.
+- Assign accounts to specific reporting groups.
+- View account activity.
+- View opening and closing balances.
+
+Prevent deletion of accounts that have accounting history.
+
+Ensure that account balances are calculated from valid
+posted transactions.
+
+========================================================
+8. CASH BOOK MANAGEMENT
+========================================================
+
+Create a dedicated Cash Book module.
+
+Support:
+
+A. Single-Column Cash Book
+B. Double-Column Cash Book
+C. Three-Column Cash Book
+D. Petty Cash Book
+
+The double-column cash book must support cash and bank
+columns.
+
+The three-column cash book must support cash, bank, and
+discount columns.
+
+The application must allow the user to select the required
+cash book format.
+
+DOUBLE-COLUMN CASH BOOK FEATURES:
+
+- Date.
+- Particulars.
+- Ledger folio.
+- Receipt reference.
+- Payment reference.
+- Cash receipts.
+- Cash payments.
+- Bank receipts.
+- Bank payments.
+- Running cash balance.
+- Running bank balance.
+- Contra entries.
+- Opening balances.
+- Closing balances.
+- Period totals.
+- Transaction search.
+- Date filters.
+- Account filters.
+- Export to PDF and Excel.
+
+The cash book must distinguish between cash and bank
+transactions.
+
+When a business transfers money from cash to bank:
+
+Debit: Bank Account
+Credit: Cash Account
+
+When a business withdraws money from the bank for office
+cash:
+
+Debit: Cash Account
+Credit: Bank Account
+
+These transactions are internal transfers and must not
+be classified as income or expenses.
+
+For a contra entry, show the transfer in both relevant
+cash book columns and assign a shared transaction reference.
+
+The system must prevent a contra entry from being counted
+twice in consolidated cash flow reports.
+
+CASH BOOK BALANCING:
+
+Opening balance
++ Receipts
+- Payments
+= Closing balance
+
+Calculate the running balance after every transaction.
+
+Support date-by-date balances and end-of-period balances.
+
+Do not allow the cash balance to become negative without
+a configurable warning or explicit authorised override.
+
+If the balance is negative because of incorrectly classified
+transactions, flag the issue for review.
+
+Do not automatically invent an opening bank balance.
+
+If the opening bank balance is missing, clearly indicate
+that the bank balance is incomplete.
+
+Allow the user to select a date range and produce a
+printable cash book.
+
+========================================================
+9. CASH RECEIPTS AND PAYMENTS
+========================================================
+
+Create separate modules for cash receipts and payments.
+
+CASH RECEIPTS:
+
+Capture:
+- Receipt number.
+- Date.
+- Customer or payer.
+- Account credited.
+- Amount received.
+- Payment method.
+- Bank account, if applicable.
+- Transaction reference.
+- Description.
+- Supporting document.
+- Received by.
+- Approval status.
+
+Payment methods may include:
+- Cash.
+- Bank transfer.
+- Cheque.
+- Card.
+- Mobile money.
+- Other configured methods.
+
+CASH PAYMENTS:
+
+Capture:
+- Payment voucher number.
+- Date.
+- Payee.
+- Expense or liability account.
+- Amount paid.
+- Payment method.
+- Bank account, if applicable.
+- Reference number.
+- Description.
+- Supporting document.
+- Prepared by.
+- Approved by.
+- Payment status.
+
+For each transaction, create the appropriate balanced
+journal entry when the transaction is posted.
+
+Prevent duplicate posting.
+
+========================================================
+10. SALES AND CUSTOMER MANAGEMENT
+========================================================
+
+Build a sales management module.
+
+Features:
+- Customer registration.
+- Customer contact information.
+- Customer account balances.
+- Sales invoices.
+- Cash sales.
+- Credit sales.
+- Sales returns.
+- Credit notes.
+- Customer payments.
+- Outstanding invoices.
+- Customer statements.
+- Receivables ageing.
+- Sales reports.
+
+Every invoice must contain:
+- Company information.
+- Customer information.
+- Invoice number.
+- Invoice date.
+- Due date.
+- Product or service description.
+- Quantity.
+- Unit price.
+- Discount.
+- Tax where applicable.
+- Total amount.
+- Amount paid.
+- Outstanding balance.
+- Payment terms.
+
+ACCOUNTING RULES:
+
+For a credit sale:
+
+Debit: Accounts Receivable
+Credit: Sales Revenue
+Credit: Tax Payable, where applicable.
+
+For a cash sale:
+
+Debit: Cash or Bank
+Credit: Sales Revenue
+Credit: Tax Payable, where applicable.
+
+Record inventory cost separately when inventory is sold
+under a perpetual inventory system.
+
+Do not automatically recognise revenue twice when an invoice
+is subsequently paid.
+
+When a customer pays an existing invoice:
+
+Debit: Cash or Bank
+Credit: Accounts Receivable.
+
+Automatically update the customer's outstanding balance.
+
+========================================================
+11. PURCHASES AND SUPPLIER MANAGEMENT
+========================================================
+
+Create a purchasing and accounts payable module.
+
+Features:
+- Supplier registration.
+- Supplier contact details.
+- Purchase invoices.
+- Cash purchases.
+- Credit purchases.
+- Purchase returns.
+- Supplier credit notes.
+- Supplier payments.
+- Outstanding supplier invoices.
+- Supplier statements.
+- Payables ageing.
+- Purchase reports.
+
+For a credit purchase of inventory:
+
+Debit: Inventory
+Credit: Accounts Payable.
+
+For an eligible expense purchased on credit:
+
+Debit: Relevant Expense
+Credit: Accounts Payable.
+
+For settlement of a supplier invoice:
+
+Debit: Accounts Payable
+Credit: Cash or Bank.
+
+Ensure that the settlement does not record the same expense
+or inventory purchase a second time.
+
+========================================================
+12. INVENTORY AND STOCK ACCOUNTING
+========================================================
+
+Create an inventory module suitable for wholesale and
+retail trading businesses.
+
+Features:
+- Product codes.
+- Product names.
+- Categories.
+- Units of measurement.
+- Purchase costs.
+- Selling prices.
+- Opening quantities.
+- Stock received.
+- Stock issued.
+- Sales returns.
+- Purchase returns.
+- Stock adjustments.
+- Damaged stock.
+- Reorder levels.
+- Stock valuation.
+- Inventory movement history.
+- Stock reports.
+
+Support configurable costing methods, including:
+- FIFO.
+- Weighted-average cost.
+
+Use a consistent costing method for each inventory item
+or inventory group according to the selected accounting
+policy.
+
+For a perpetual inventory system, record inventory
+movement and cost of goods sold correctly.
+
+For inventory sold:
+
+Debit: Cost of Goods Sold
+Credit: Inventory.
+
+Do not reduce inventory without recording a corresponding
+stock movement.
+
+Prevent negative inventory by default, with authorised
+exceptions where configured.
+
+Support physical stock counts and reconciliation.
+
+========================================================
+13. GENERAL JOURNAL
+========================================================
+
+Create a general journal module.
+
+Allow users to record:
+- Opening entries.
+- Adjusting entries.
+- Accruals.
+- Prepayments.
+- Depreciation.
+- Corrections.
+- Reclassifications.
+- Provisions.
+- Closing entries.
+- Reversing entries.
+
+Each journal must have:
+- Journal number.
+- Date.
+- Description.
+- Reference.
+- Account lines.
+- Debit amounts.
+- Credit amounts.
+- Supporting documents.
+- Prepared by.
+- Approved by.
+- Status.
+
+Enforce balanced journal entries.
+
+Provide a preview before posting.
+
+After posting, update the general ledger and all applicable
+financial reports automatically.
+
+========================================================
+14. GENERAL LEDGER
+========================================================
+
+Generate a general ledger for every account.
+
+The ledger must display:
+- Date.
+- Transaction reference.
+- Particulars.
+- Journal number.
+- Debit.
+- Credit.
+- Running balance.
+
+Allow users to filter the ledger by:
+- Account.
+- Date range.
+- Transaction type.
+- Reference.
+- Accounting period.
+
+Allow users to click a transaction and view its source
+document and complete journal entry.
+
+Generate opening balances, period movements, and closing
+balances.
+
+Support account reconciliation and transaction drill-down.
+
+========================================================
+15. TRIAL BALANCE
+========================================================
+
+Automatically generate an unadjusted and adjusted trial
+balance.
+
+The trial balance must contain:
+- Account code.
+- Account name.
+- Opening debit balance.
+- Opening credit balance.
+- Period debit movements.
+- Period credit movements.
+- Closing debit balance.
+- Closing credit balance.
+
+The system must ensure that:
+
+TOTAL DEBITS = TOTAL CREDITS.
+
+If the trial balance does not balance, display a clear
+diagnostic report.
+
+Identify relevant unbalanced entries, invalid opening
+balances, incomplete migration balances, or other causes.
+
+Do not hide discrepancies or force the trial balance to
+balance using an unexplained suspense amount.
+
+Allow the user to export the trial balance to PDF, Excel,
+and CSV.
+
+========================================================
+16. FINANCIAL STATEMENTS
+========================================================
+
+Generate financial statements from posted accounting data.
+
+A. INCOME STATEMENT
+
+Include:
+- Revenue.
+- Sales returns.
+- Net revenue.
+- Cost of goods sold.
+- Gross profit.
+- Other operating income.
+- Operating expenses.
+- Operating profit.
+- Finance costs.
+- Profit before tax.
+- Income tax expense.
+- Net profit or loss.
+
+B. BALANCE SHEET
+
+Use the title:
+
+STATEMENT OF FINANCIAL POSITION.
+
+Include:
+- Current assets.
+- Non-current assets.
+- Current liabilities.
+- Non-current liabilities.
+- Equity.
+- Retained earnings.
+- Current-year profit or loss.
+
+Enforce the accounting equation:
+
+ASSETS = LIABILITIES + EQUITY.
+
+If the statement does not balance, display the difference
+and provide diagnostic information.
+
+C. CASH FLOW STATEMENT
+
+Prepare a statement of cash flows showing:
+- Cash flows from operating activities.
+- Cash flows from investing activities.
+- Cash flows from financing activities.
+- Net change in cash and cash equivalents.
+- Opening cash and cash equivalents.
+- Closing cash and cash equivalents.
+
+Support both the direct and indirect methods where
+appropriate.
+
+For the indirect method, start with profit or loss and
+make the appropriate adjustments for non-cash items,
+working capital movements, and investing or financing
+transactions.
+
+Do not classify transfers between a company's own cash
+and bank accounts as operating, investing, or financing
+cash flows.
+
+Avoid counting the same transaction twice.
+
+D. STATEMENT OF CHANGES IN EQUITY
+
+Include:
+- Opening equity.
+- Owner contributions or share issues.
+- Profit or loss.
+- Dividends or drawings.
+- Other applicable equity movements.
+- Closing equity.
+
+All reports must support:
+- Monthly reporting.
+- Quarterly reporting.
+- Annual reporting.
+- Custom date ranges.
+- Comparison with previous periods.
+- Comparison with budget.
+- PDF and Excel export.
+
+========================================================
+17. BANK RECONCILIATION
+========================================================
+
+Create a bank reconciliation module.
+
+Allow the user to:
+- Import bank statements.
+- Upload CSV bank transaction files.
+- Record bank statement balances.
+- Match bank transactions to book entries.
+- Identify unmatched transactions.
+- Identify bank charges.
+- Identify bank interest.
+- Identify outstanding cheques.
+- Identify deposits in transit.
+- Identify duplicate transactions.
+- Record approved reconciliation adjustments.
+
+Show:
+- Bank statement balance.
+- Adjustments for deposits in transit.
+- Adjustments for outstanding payments.
+- Adjusted bank balance.
+- Cash book bank balance.
+- Book adjustments.
+- Reconciliation difference.
+
+The final reconciliation difference should be zero before
+a reconciliation is marked complete, unless an authorised
+user explicitly records an unresolved exception.
+
+Do not automatically delete unmatched transactions.
+
+Do not automatically create accounting entries from
+imported bank transactions without validation.
+
+========================================================
+18. FIXED ASSETS AND DEPRECIATION
+========================================================
+
+Create a fixed asset register.
+
+Capture:
+- Asset identification number.
+- Asset name.
+- Acquisition date.
+- Acquisition cost.
+- Useful life.
+- Residual value.
+- Depreciation method.
+- Accumulated depreciation.
+- Net book value.
+- Location.
+- Responsible department.
+- Disposal date.
+
+Support commonly used depreciation methods, including
+straight-line depreciation and reducing balance.
+
+Generate depreciation schedules.
+
+Post depreciation through authorised journal entries.
+
+Support asset acquisition, transfer, impairment, and disposal.
+
+Do not depreciate assets before their configured
+depreciation commencement date.
+
+Allow the accountant to review and approve depreciation
+entries before posting.
+
+========================================================
+19. TAX MANAGEMENT
+========================================================
+
+Create a configurable tax module.
+
+Support:
+- Sales tax or VAT where applicable.
+- Input tax.
+- Output tax.
+- Withholding tax where applicable.
+- Tax-exempt transactions.
+- Zero-rated transactions.
+- Tax summaries.
+- Tax liability reports.
+- Tax transaction registers.
+
+Allow different tax rates and tax treatments based on
+the company's jurisdiction and transaction type.
+
+Never hardcode one country's tax rules for all companies.
+
+Tax calculations must be configurable and reviewed before
+posting.
+
+The software must not claim to guarantee legal or tax
+compliance without appropriate jurisdiction-specific
+configuration and professional review.
+
+========================================================
+20. PAYROLL ACCOUNTING
+========================================================
+
+Provide an optional payroll accounting module.
+
+Features:
+- Employee records.
+- Basic salaries.
+- Allowances.
+- Overtime.
+- Bonuses.
+- Deductions.
+- Employer contributions.
+- Net salary.
+- Payslips.
+- Payroll summaries.
+- Payroll journal entries.
+
+Payroll accounting must support configurable rules for
+the company's jurisdiction.
+
+Use appropriate permissions for confidential employee data.
+
+Generate payroll journals only after the payroll is
+approved.
+
+Do not assume a tax rate or statutory contribution rate
+without appropriate configuration.
+
+========================================================
+21. BUDGETING AND FINANCIAL ANALYSIS
+========================================================
+
+Build a budgeting module.
+
+Allow users to prepare budgets for:
+- Revenue.
+- Purchases.
+- Salaries.
+- Rent.
+- Utilities.
+- Marketing.
+- Administration.
+- Capital expenditure.
+- Other income and expenses.
+
+Support monthly, quarterly, and annual budgets.
+
+Compare actual results with budgeted amounts.
+
+Calculate:
+- Budget variance.
+- Percentage variance.
+- Revenue growth.
+- Gross profit margin.
+- Net profit margin.
+- Current ratio.
+- Working capital.
+- Receivables turnover.
+- Payables turnover.
+- Inventory turnover.
+
+Explain financial ratios in plain language.
+
+Avoid displaying ratios that cannot be calculated reliably
+because the necessary financial data is missing.
+
+========================================================
+22. ACCOUNTING DOCUMENT GENERATION
+========================================================
+
+The system must produce professional, printable accounting
+documents.
+
+Required documents include:
+
+1. Cash receipt vouchers.
+2. Payment vouchers.
+3. Sales invoices.
+4. Purchase invoices.
+5. Customer receipts.
+6. Supplier payment receipts.
+7. Credit notes.
+8. Debit notes.
+9. Petty cash vouchers.
+10. Cash book.
+11. Three-column cash book.
+12. Bank book.
+13. General journal.
+14. General ledger.
+15. Trial balance.
+16. Bank reconciliation statement.
+17. Income statement.
+18. Statement of financial position.
+19. Cash flow statement.
+20. Statement of changes in equity.
+21. Accounts receivable ageing report.
+22. Accounts payable ageing report.
+23. Inventory valuation report.
+24. Inventory movement report.
+25. Fixed asset register.
+26. Depreciation schedule.
+27. Tax summary.
+28. Payroll summary.
+29. Budget variance report.
+30. Financial performance report.
+
+DOCUMENT DESIGN:
+
+Every generated document should contain:
+- Company logo.
+- Company name.
+- Company contact details.
+- Document title.
+- Document number.
+- Reporting period or transaction date.
+- Currency.
+- Relevant account or customer details.
+- Transaction lines.
+- Totals.
+- Prepared-by information where applicable.
+- Approval information where applicable.
+- Page numbers.
+- Generation timestamp.
+
+Support:
+- Print.
+- PDF download.
+- Excel download for tabular reports.
+- CSV download where appropriate
